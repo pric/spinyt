@@ -21,4 +21,3 @@ Sound.js functions :
 * Pause sound
 * Set volume
 * Set pitch
-
