@@ -1,16 +1,18 @@
-var Disk = function(posX, posY) {
+var Disk = function() {
     if (this.constructor === Disk) 
 	{
       throw new Error("Can't instantiate abstract class!");
     }
 	
-	console.log(arguments);
+	StageObject.apply(this, arguments);
 	
 	this.isSpinning = false;
+	this.spinningSpeed = 0;
 	this.angle = 0;
-	this.centerX = posX;
-	this.centerY = posY;
 };
+
+Disk.prototype = Object.create(StageObject.prototype);
+Disk.prototype.constructor = Disk;
 
 Disk.prototype.getRadianAngle = function ()
 {
@@ -34,13 +36,13 @@ Disk.prototype.stop = function ()
 
 Disk.prototype.spin = function (speed)
 {
+	if (speed)
+	{
+		this.spinningSpeed = speed;
+	}
+	
 	if (this.isSpinning)
 	{
-		this.angle += speed;
+		this.angle += this.spinningSpeed;
 	}
-}
-
-Disk.prototype.draw = function() 
-{
-    throw new Error("Abstract method!");
 }
