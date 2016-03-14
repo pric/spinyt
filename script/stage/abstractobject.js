@@ -9,11 +9,6 @@ var StageObject = function(posX, posY) {
 	this.listeners = [];
 };
 
-StageObject.prototype.slide = function(value) 
-{
-    this.value = value;
-}
-
 StageObject.prototype.draw = function() 
 {
     throw new Error("Abstract method!");
