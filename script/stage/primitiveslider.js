@@ -5,9 +5,8 @@ var PrimitiveSlider = function() {
 PrimitiveSlider.prototype = Object.create(Slider.prototype);
 PrimitiveSlider.prototype.constructor = PrimitiveSlider;
 
-PrimitiveSlider.prototype.draw = function()
+PrimitiveSlider.prototype.draw = function(canvas)
 {
-	var canvas = document.getElementsByTagName('canvas')[0];
 	var ctx = canvas.getContext("2d");
 	
 	ctx.save();

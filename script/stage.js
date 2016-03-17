@@ -1,9 +1,9 @@
-function Stage() 
+function Stage(canvas_id) 
 {
-	var canvas = document.getElementsByTagName('canvas')[0];
+	this.canvas = document.getElementsByTagName(canvas_id)[0];
 	
-	this.slider1 = new PrimitiveSlider(canvas.width - (canvas.width/ 10), canvas.height / 2, 50, 600);
-	this.disk = new PictureDisk(canvas.width / 2, canvas.height / 2);
+	this.slider1 = new PrimitiveSlider(this.canvas.width - (this.canvas.width/ 10), this.canvas.height / 2, 50, 600);
+	this.disk = new PictureDisk(this.canvas.width / 2, this.canvas.height / 2);
 	this.disk.spin(this.slider1.value);
 	
 	var current = this;
@@ -21,8 +21,8 @@ Stage.prototype.start = function()
 
 Stage.prototype.draw = function()
 {
-	this.disk.draw();
-	this.slider1.draw();
+	this.disk.draw(this.canvas);
+	this.slider1.draw(this.canvas);
 }
 
 Stage.prototype.actualize = function(current)

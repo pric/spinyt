@@ -5,11 +5,9 @@ var PrimitiveDisk = function() {
 PrimitiveDisk.prototype = Object.create(Disk.prototype);
 PrimitiveDisk.prototype.constructor = PrimitiveDisk;
 
-PrimitiveDisk.prototype.draw = function()
+PrimitiveDisk.prototype.draw = function(canvas)
 {
 	var radius = 100;
-	
-	var canvas = document.getElementsByTagName('canvas')[0];
 	var ctx = canvas.getContext("2d");
 	
 	ctx.clearRect(this.centerX - radius, this.centerY - radius, this.centerX + radius, this.centerY + radius);

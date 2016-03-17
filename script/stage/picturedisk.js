@@ -8,12 +8,11 @@ var PictureDisk = function() {
 PictureDisk.prototype = Object.create(Disk.prototype);
 PictureDisk.prototype.constructor = PictureDisk;
 
-PictureDisk.prototype.draw = function()
+PictureDisk.prototype.draw = function(canvas)
 {	
 	var radiusX = this.imageObj.width / 2;
 	var radiusY = this.imageObj.width / 2;
 	
-	var canvas = document.getElementsByTagName('canvas')[0];
 	var ctx = canvas.getContext("2d");
 	
 	ctx.save();

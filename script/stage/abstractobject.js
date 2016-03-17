@@ -9,7 +9,7 @@ var StageObject = function(posX, posY) {
 	this.listeners = [];
 };
 
-StageObject.prototype.draw = function() 
+StageObject.prototype.draw = function(canvas) 
 {
     throw new Error("Abstract method!");
 }
