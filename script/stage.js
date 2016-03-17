@@ -6,6 +6,8 @@ function Stage(canvas)
 	this.disk = new PictureDisk(this.canvas.width / 2, this.canvas.height / 2, 500, 500);
 	this.disk.spin(this.slider1.value);
 	
+	this.listeners = [];
+	
 	stageObject = this;
 	this.slider1.listenToEvent("slide", function() { stageObject.disk.spin(stageObject.slider1.value / 2); });
 }
@@ -34,14 +36,50 @@ Stage.prototype.actualize = function(current)
 
 Stage.prototype.touchStart = function(eventName, touch)
 {
-	stageObject.slider1.isTouched(touch.pageX, touch.pageY);
-	stageObject.disk.isTouched(touch.pageX, touch.pageY);
+	if (stageObject.slider1.isTouched(touch.pageX, touch.pageY))
+	{
+		stageObject.slider1.onTouch(touch);
+		stageObject.listenTouch(touch.identifier, stageObject.slider1);
+	}
+	
+	if (stageObject.disk.isTouched(touch.pageX, touch.pageY))
+	{
+		stageObject.disk.onTouch(touch);
+		stageObject.listenTouch(touch.identifier, stageObject.disk);
+	}
 }
 
 Stage.prototype.touchMove = function(eventName, touch)
 {
+	if (stageObject.listeners[touch.identifier])
+	{
+		for(var callbackIndex = 0; callbackIndex < stageObject.listeners[touch.identifier].length; callbackIndex++)
+		{
+			stageObject.listeners[touch.identifier][callbackIndex].onMove();
+		}
+	}
 }
 
 Stage.prototype.touchEnd = function(eventName, touch)
 {
+	if (stageObject.listeners[touch.identifier])
+	{
+		for(var callbackIndex = 0; callbackIndex < stageObject.listeners[touch.identifier].length; callbackIndex++)
+		{
+			stageObject.listeners[touch.identifier][callbackIndex].onTouchRelease();
+		}
+		
+		delete stageObject.listeners[touch.identifier];
+	}
 }
+
+Stage.prototype.listenTouch = function(touchId, callback)
+{
+	if (!stageObject.listeners[touchId])
+	{
+		stageObject.listeners[touchId] = [];
+	}
+	
+	stageObject.listeners[touchId].push(callback);
+}
+

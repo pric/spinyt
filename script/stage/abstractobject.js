@@ -22,6 +22,21 @@ StageObject.prototype.isTouched = function(x, y)
 	return false;
 }
 
+StageObject.prototype.onTouch = function(object) 
+{
+    console.log("Touched");
+}
+
+StageObject.prototype.onMove = function(object) 
+{
+    console.log("Move");
+}
+
+StageObject.prototype.onTouchRelease = function(object) 
+{
+    console.log("Release");
+}
+
 StageObject.prototype.draw = function(canvas) 
 {
     throw new Error("Abstract method!");
