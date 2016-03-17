@@ -13,13 +13,17 @@ var StageObject = function(centerX, centerY, width, height) {
 
 StageObject.prototype.isTouched = function(x, y) 
 {
-    if (this.centerX < x && this.centerX + this.width > x && this.centerY < y && this.centerY + this.height > y)
+    if (this.centerX - (this.width / 2) < x && this.centerX + (this.width / 2) > x && this.centerY - (this.height / 2) < y && this.centerY + (this.height / 2) > y)
 	{
-		console.log("YES!!!!!!");
 		return true;
 	}
 	
 	return false;
+}
+
+StageObject.prototype.isStillTouched = function(x, y) 
+{
+    return this.isTouched(x, y);
 }
 
 StageObject.prototype.onTouch = function(object) 
@@ -58,7 +62,7 @@ StageObject.prototype.notifyListeners = function(eventName)
 	{
 		for(var callbackIndex = 0; callbackIndex < this.listeners[eventName].length; callbackIndex++)
 		{
-			this.listeners[eventName][callbackIndex]();
+			this.listeners[eventName][callbackIndex](arguments);
 		}
 	}
 }

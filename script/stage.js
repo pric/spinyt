@@ -4,12 +4,11 @@ function Stage(canvas)
 	
 	this.slider1 = new PrimitiveSlider(this.canvas.width - (this.canvas.width/ 10), this.canvas.height / 2, 50, 600);
 	this.disk = new PictureDisk(this.canvas.width / 2, this.canvas.height / 2, 500, 500);
-	this.disk.spin(this.slider1.value);
 	
 	this.listeners = [];
 	
 	stageObject = this;
-	this.slider1.listenToEvent("slide", function() { stageObject.disk.spin(stageObject.slider1.value / 2); });
+	this.slider1.listenToEvent("SLIDE", function() { stageObject.disk.spin(stageObject.slider1.value / 2); });
 }
 
 var stageObject = null;
@@ -53,9 +52,14 @@ Stage.prototype.touchMove = function(eventName, touch)
 {
 	if (stageObject.listeners[touch.identifier])
 	{
-		for(var callbackIndex = 0; callbackIndex < stageObject.listeners[touch.identifier].length; callbackIndex++)
+		if(stageObject.listeners[touch.identifier].isStillTouched(touch.pageX, touch.pageY))
 		{
-			stageObject.listeners[touch.identifier][callbackIndex].onMove();
+			stageObject.listeners[touch.identifier].onMove(touch);
+		}
+		else
+		{
+			stageObject.listeners[touch.identifier].onTouchRelease();
+			stageObject.listeners[touch.identifier] = null;
 		}
 	}
 }
@@ -64,22 +68,17 @@ Stage.prototype.touchEnd = function(eventName, touch)
 {
 	if (stageObject.listeners[touch.identifier])
 	{
-		for(var callbackIndex = 0; callbackIndex < stageObject.listeners[touch.identifier].length; callbackIndex++)
-		{
-			stageObject.listeners[touch.identifier][callbackIndex].onTouchRelease();
-		}
-		
-		delete stageObject.listeners[touch.identifier];
+		stageObject.listeners[touch.identifier].onTouchRelease();
 	}
 }
 
 Stage.prototype.listenTouch = function(touchId, callback)
 {
-	if (!stageObject.listeners[touchId])
+	if (!stageObject.listeners)
 	{
-		stageObject.listeners[touchId] = [];
+		stageObject.listeners= [];
 	}
 	
-	stageObject.listeners[touchId].push(callback);
+	stageObject.listeners[touchId] = callback;
 }
 

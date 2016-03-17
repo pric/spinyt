@@ -6,23 +6,35 @@ var Slider = function() {
 	
 	StageObject.apply(this, arguments);
 	
-	this.value = 50;
+	this.value = 0;
 };
 
 Slider.prototype = Object.create(StageObject.prototype);
 Slider.prototype.constructor = Slider;
 
-Slider.prototype.slide = function (speed)
+Slider.prototype.slide = function (value)
 {
-	if (speed)
-	{
-		if (speed > 100)
+	if (value)
+	{		
+		if (value < 0)
 		{
-			speed = 100;
+			value = 0;
+		}
+
+		if (value > 100)
+		{
+			value = 100;
 		}
 		
-		this.value = speed;
+		this.value = value;
 	}
 	
-	this.notifyListeners("slide");
+	this.notifyListeners("SLIDE");
+}
+
+Slider.prototype.onMove = function(object) 
+{	
+	var toBeRemoved = this.centerY - (this.height / 2);
+	var newPosY = object.pageY - toBeRemoved;
+	this.slide(newPosY * 100 / this.height);
 }
