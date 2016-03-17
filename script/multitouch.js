@@ -1,83 +1,105 @@
-var activeTouches = {
-  single: [],
-  double: []
-};
-
-function initMultiTouch() {
-
-  var el = document.getElementsByTagName('canvas')[0];
-  el.addEventListener('touchstart', handleStart, false);
-  el.addEventListener('touchend', handleEnd, false);
-  el.addEventListener('touchmove', handleMove, false);
-
+var Multitouch = function(canvas)
+{
+	this.canvas = canvas;
+	this.canvas.addEventListener('touchstart', this.handleStart, false);
+	this.canvas.addEventListener('touchend', this.handleEnd, false);
+	this.canvas.addEventListener('touchmove', this.handleMove, false);
+	
+	this.listeners = [];
+	this.activeTouches = {
+		single: [],
+		double: []
+	};
+	
+	multitouchObject = this;
 }
 
-function getTouchIndexById(idToFind) {
+var multitouchObject = null;
 
-  for(var i = 0; i < activeTouches.single.length; i++) {
+Multitouch.prototype.getTouchIndexById = function(idToFind) 
+{
+	for(var i = 0; i < multitouchObject.activeTouches.single.length; i++) 
+	{
+		var id = multitouchObject.activeTouches.single[i].identifier;
+		if (id == idToFind) 
+		{
+			return i;
+		}
+	}
 
-    var id = activeTouches.single[i].identifier;
-
-    if (id == idToFind) {
-
-      return i;
-
-    }
-
-  }
-
-  return -1;
+	return -1;
 }
 
-function handleStart(evt) {
+Multitouch.prototype.handleStart = function(event) 
+{
+	event.preventDefault();
 
-  event.preventDefault();
+	var touches = event.changedTouches;
 
-  var touches = event.changedTouches;
-
-  for (var i = 0; i < touches.length; i++) {
-
-    activeTouches.single.push({
-      identifier: touch.identifier,
-      pageX: touch.pageX,
-      pageY: touch.pageY,
-      createTime: evt.timeStamp
-    });
-
-  }
-
-  console.log(activeTouches);
+	for (var i = 0; i < touches.length; i++) 
+	{
+		var currentTouch = {
+			identifier: touches[i].identifier,
+			pageX: touches[i].pageX,
+			pageY: touches[i].pageY,
+			createTime: event.timeStamp
+		};
+		
+		multitouchObject.activeTouches.single.push(currentTouch);
+	
+		multitouchObject.notifyListeners("TOUCH_START", currentTouch);
+	}
 }
 
-function handleMove(evt) {
+Multitouch.prototype.handleMove = function(event)
+{
+	event.preventDefault();
 
-  event.preventDefault();
+	var touches = event.changedTouches;
 
-  var touches = event.changedTouches;
-
-  for (var i = 0; i < touches.length; i++) {
-
-    var idx = getTouchIndexById(touches[i].identifier);
-    activeTouches.single[idx].pageX = touches[i].pageX;
-    activeTouches.single[idx].pageY = touches[i].pageY;
-
-  }
-
-  console.log(activeTouches);
+	for (var i = 0; i < touches.length; i++) 
+	{
+		var idx = multitouchObject.getTouchIndexById(touches[i].identifier);
+		multitouchObject.activeTouches.single[idx].pageX = touches[i].pageX;
+		multitouchObject.activeTouches.single[idx].pageY = touches[i].pageY;
+	
+		multitouchObject.notifyListeners("TOUCH_MOVE", multitouchObject.activeTouches.single[idx]);
+	}
 }
 
-function handleEnd(evt) {
+Multitouch.prototype.handleEnd = function(event) 
+{
+	event.preventDefault();
 
-  event.preventDefault();
+	var touches = event.changedTouches;
 
-  var touches = event.changedTouches;
-
-  for (var i = 0; i < touches.length; i++) {
-
-    var idx = getTouchIndexById(touches[i].identifier);
-    activeTouches.single.splice(idx,1);
-
-  }
-
-  console.log(activeTouches);
+	for (var i = 0; i < touches.length; i++) 
+	{
+		var idx = multitouchObject.getTouchIndexById(touches[i].identifier);
+	
+		multitouchObject.notifyListeners("TOUCH_END", multitouchObject.activeTouches.single[idx]);
+		multitouchObject.activeTouches.single.splice(idx,1);
+	}
 }
+
+Multitouch.prototype.listenToEvent = function(eventName, callback)
+{
+	if (!this.listeners[eventName])
+	{
+		this.listeners[eventName] = [];
+	}
+	
+	this.listeners[eventName].push(callback);
+}
+
+Multitouch.prototype.notifyListeners = function(eventName)
+{
+	if (this.listeners[eventName])
+	{
+		for(var callbackIndex = 0; callbackIndex < this.listeners[eventName].length; callbackIndex++)
+		{
+			this.listeners[eventName][callbackIndex].apply(this, arguments);
+		}
+	}
+}
+
