@@ -1,13 +1,10 @@
-var Slider = function(posX, posY, width, height) {
+var Slider = function() {
     if (this.constructor === Slider) 
 	{
       throw new Error("Can't instantiate abstract class!");
     }
 	
 	StageObject.apply(this, arguments);
-	
-	this.width = width;
-	this.height = height;
 	
 	this.value = 50;
 };

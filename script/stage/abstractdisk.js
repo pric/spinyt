@@ -46,3 +46,12 @@ Disk.prototype.spin = function (speed)
 		this.angle += this.spinningSpeed;
 	}
 }
+
+Disk.prototype.isTouched = function(x, y) 
+{
+	var radius = this.imageObj.width / 2;
+	
+	var distance = Math.sqrt(Math.pow(y - this.centerY, 2) + Math.pow(x - this.centerX, 2));
+	
+	return radius >= distance;
+}
