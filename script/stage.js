@@ -14,6 +14,11 @@ function Stage(canvas)
 	var popbox5 = new PicturePopbox(64, 576, 128, 128, 5);
 
 	slider1.listenToEvent("SLIDE", function() { disk.spin(slider1.value / 2); });
+	popbox1.listenToEvent("POP", function() { disk.addPopbox(popbox1.centerX, popbox1.centerY, "#00FF00"); });
+	popbox2.listenToEvent("POP", function() { disk.addPopbox(popbox2.centerX, popbox2.centerY, "#FF0000"); });
+	popbox3.listenToEvent("POP", function() { disk.addPopbox(popbox3.centerX, popbox3.centerY, "#FFFF00"); });
+	popbox4.listenToEvent("POP", function() { disk.addPopbox(popbox4.centerX, popbox4.centerY, "#0000FF"); });
+	popbox5.listenToEvent("POP", function() { disk.addPopbox(popbox5.centerX, popbox5.centerY, "#FFFFFF"); });
 
 	this.objects = [];
 	this.objects.push(disk);

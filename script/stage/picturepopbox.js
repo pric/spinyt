@@ -2,7 +2,7 @@ var PicturePopbox = function() {
     Popbox.apply(this, arguments);
 	
 	this.imageObj = new Image();
-	this.imageObj.src = 'image/icon_' + arguments[4] + '.png';
+	this.imageObj.src = 'image/theme_' + THEME_ID + '/icon_' + arguments[4] + '.png';
 };
 
 PicturePopbox.prototype = Object.create(Popbox.prototype);
@@ -16,11 +16,9 @@ PicturePopbox.prototype.draw = function(canvas)
 	var ctx = canvas.getContext("2d");
 	
 	ctx.save();
-	// ctx.clearRect(this.centerX - radiusX, this.centerY - radiusY, this.centerX + radiusX, this.centerY + radiusY);
-	
 	ctx.translate(this.centerX, this.centerY);
 	
-    ctx.drawImage(this.imageObj, -this.imageObj.width / 2, -this.imageObj.height / 2);
+    ctx.drawImage(this.imageObj, -this.width / 2, -this.height / 2, this.width, this.height);
 	
 	ctx.restore();	
 }

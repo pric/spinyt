@@ -9,10 +9,17 @@ var Disk = function() {
 	this.isSpinning = false;
 	this.spinningSpeed = 0;
 	this.angle = 0;
+	
+	this.popboxes = [];
 };
 
 Disk.prototype = Object.create(StageObject.prototype);
 Disk.prototype.constructor = Disk;
+
+Disk.prototype.getRadius = function ()
+{
+	return Math.min(this.width / 2, this.height / 2);
+}
 
 Disk.prototype.getRadianAngle = function ()
 {
@@ -45,6 +52,23 @@ Disk.prototype.spin = function (speed)
 	{
 		this.angle += this.spinningSpeed;
 	}
+}
+
+Disk.prototype.addPopbox = function (posX, posY, popboxType)
+{
+	var radiusX = Math.pow(posX - this.centerX, 2);
+	var radiusY = Math.pow(posY - this.centerY, 2);
+	var radius = Math.sqrt(radiusX + radiusY);
+	
+	if (radius < this.getRadius())
+	{
+		this.addPopboxToDisk(posX, posY, popboxType);
+	}
+}
+
+Disk.prototype.addPopboxToDisk = function (posX, posY, popboxType)
+{
+	this.popboxes.push({posX : posX, posY : posY, type : popboxType});
 }
 
 Disk.prototype.isTouched = function(x, y) 

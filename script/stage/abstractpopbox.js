@@ -19,8 +19,8 @@ Popbox.prototype.onTouch = function(object)
 {	
 	this.centerX = object.pageX;
 	this.centerY = object.pageY;
-	this.width = this.startUpWidth / 5;
-	this.height = this.startUpHeigth / 5;
+	this.width = this.startUpWidth / 3;
+	this.height = this.startUpHeigth / 3;
 }
 
 Popbox.prototype.onMove = function(object) 
@@ -31,6 +31,8 @@ Popbox.prototype.onMove = function(object)
 
 Popbox.prototype.onTouchRelease = function(object) 
 {	
+	this.notifyListeners("POP");
+	
 	this.centerX = this.startUpPosX;
 	this.centerY = this.startUpPosY;
 	this.width = this.startUpWidth;
