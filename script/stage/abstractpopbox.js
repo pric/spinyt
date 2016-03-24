@@ -15,7 +15,7 @@ var Popbox = function() {
 Popbox.prototype = Object.create(StageObject.prototype);
 Popbox.prototype.constructor = Popbox;
 
-Popbox.prototype.onDoubleTouch = function(object) 
+Popbox.prototype.onTouch = function(object) 
 {	
 	this.centerX = object.pageX;
 	this.centerY = object.pageY;
