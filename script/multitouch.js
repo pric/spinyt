@@ -54,7 +54,7 @@ Multitouch.prototype.handleStart = function(event)
 			var timeDiff = currentTouch.createTime - lastTouch.createTime;
 			var pointsDistance = (Math.pow(currentTouch.pageX - lastTouch.pageX, 2) + Math.pow(currentTouch.pageY - lastTouch.pageY, 2));
 
-			if(timeDiff < 100 && pointsDistance < 5000) {
+			if(timeDiff < 200 && pointsDistance < 9000) {
 
 				multitouchObject.activeTouches.double.push(currentTouch);
 				multitouchObject.activeTouches.single.splice(lastTouchIndex,1);
@@ -75,7 +75,6 @@ Multitouch.prototype.handleStart = function(event)
 		}, TOUCH_EVENT_TIMEOUT);
 	}
 
-	console.log(multitouchObject.activeTouches);
 }
 
 Multitouch.prototype.handleMove = function(event)
