@@ -1,4 +1,4 @@
-function Stage(canvas) 
+function Stage(canvas)
 {
 	this.canvas = canvas;
 	this.listeners = [];	
@@ -12,9 +12,9 @@ function Stage(canvas)
 	var popbox3 = new PicturePopbox(64, 320, 128, 128, 3);
 	var popbox4 = new PicturePopbox(64, 448, 128, 128, 4);
 	var popbox5 = new PicturePopbox(64, 576, 128, 128, 5);
-	
+
 	slider1.listenToEvent("SLIDE", function() { disk.spin(slider1.value / 2); });
-	
+
 	this.objects = [];
 	this.objects.push(disk);
 	this.objects.push(slider1);
@@ -28,9 +28,9 @@ function Stage(canvas)
 var stageObject = null;
 
 Stage.prototype.start = function()
-{	
+{
 	this.executeFunctionOnObjects("start");
-	
+
 	var current = this;
 	setInterval(function(){ current.actualize(current); }, 50);
 }
@@ -50,7 +50,7 @@ Stage.prototype.actualize = function(current)
 }
 
 Stage.prototype.touchStart = function(eventName, touch)
-{	
+{
 	for(var index = 0; index < stageObject.objects.length; index++)
 	{
 		if (stageObject.objects[index].isTouched(touch.pageX, touch.pageY))
@@ -62,7 +62,8 @@ Stage.prototype.touchStart = function(eventName, touch)
 }
 
 Stage.prototype.doubleTouchStart = function(eventName, touch)
-{	
+{
+	console.log("anus");
 	for(var index = 0; index < stageObject.objects.length; index++)
 	{
 		if (stageObject.objects[index].isTouched(touch.pageX, touch.pageY))
@@ -103,7 +104,7 @@ Stage.prototype.listenTouch = function(touchId, callback)
 	{
 		stageObject.listeners= [];
 	}
-	
+
 	stageObject.listeners[touchId] = callback;
 }
 
