@@ -16,8 +16,6 @@ PictureDisk.prototype.draw = function(canvas)
 	var ctx = canvas.getContext("2d");
 	
 	ctx.save();
-	ctx.clearRect(this.centerX - radiusX, this.centerY - radiusY, this.centerX + radiusX, this.centerY + radiusY);
-	
 	ctx.translate(this.centerX, this.centerY);
 	
 	ctx.rotate(this.getRadianAngle());

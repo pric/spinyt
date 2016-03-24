@@ -10,8 +10,6 @@ PrimitiveDisk.prototype.draw = function(canvas)
 	var radius = 100;
 	var ctx = canvas.getContext("2d");
 	
-	ctx.clearRect(this.centerX - radius, this.centerY - radius, this.centerX + radius, this.centerY + radius);
-	
 	ctx.beginPath();
 	ctx.moveTo(this.centerX, this.centerY);
 	ctx.lineTo(this.centerX + Math.cos(this.getRadianAngle()) * radius, this.centerY + Math.sin(this.getRadianAngle()) * radius);

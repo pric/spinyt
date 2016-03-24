@@ -11,9 +11,7 @@ PrimitiveSlider.prototype.draw = function(canvas)
 {
 	var ctx = canvas.getContext("2d");
 	
-	ctx.save();
-	ctx.clearRect(this.centerX - (this.width / 2), this.centerY - (this.height / 2) - (this.handleHeigth / 2), this.width, this.height);
-	
+	ctx.save();	
 	ctx.translate(this.centerX - (this.width / 2), this.centerY - (this.height / 2));
 	
 	ctx.fillStyle="#FF0000";

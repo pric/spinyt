@@ -1,18 +1,28 @@
 function Stage(canvas) 
 {
-	this.canvas = canvas;	
+	this.canvas = canvas;
+	this.listeners = [];	
+	stageObject = this;
 	
 	var slider1 = new PrimitiveSlider(this.canvas.width - (this.canvas.width/ 10), this.canvas.height / 2, 50, 600);
 	var disk = new PictureDisk(this.canvas.width / 2, this.canvas.height / 2, 500, 500);
+	var popbox1 = new PrimitivePopbox(64, 64, 128, 128);
+	//var popbox1 = new PicturePopbox(64, 64, 128, 128, 1);
+	var popbox2 = new PicturePopbox(64, 192, 128, 128, 2);
+	var popbox3 = new PicturePopbox(64, 320, 128, 128, 3);
+	var popbox4 = new PicturePopbox(64, 448, 128, 128, 4);
+	var popbox5 = new PicturePopbox(64, 576, 128, 128, 5);
 	
-	this.listeners = [];
-	
-	stageObject = this;
 	slider1.listenToEvent("SLIDE", function() { disk.spin(slider1.value / 2); });
 	
 	this.objects = [];
 	this.objects.push(disk);
 	this.objects.push(slider1);
+	this.objects.push(popbox1);
+	this.objects.push(popbox2);
+	this.objects.push(popbox3);
+	this.objects.push(popbox4);
+	this.objects.push(popbox5);
 }
 
 var stageObject = null;
@@ -27,6 +37,9 @@ Stage.prototype.start = function()
 
 Stage.prototype.draw = function()
 {
+	var ctx = this.canvas.getContext("2d");
+	ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+	
 	this.executeFunctionOnObjects("draw", this.canvas);
 }
 
