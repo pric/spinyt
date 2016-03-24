@@ -2,20 +2,24 @@ function Stage(canvas)
 {
 	this.canvas = canvas;	
 	
-	this.slider1 = new PrimitiveSlider(this.canvas.width - (this.canvas.width/ 10), this.canvas.height / 2, 50, 600);
-	this.disk = new PictureDisk(this.canvas.width / 2, this.canvas.height / 2, 500, 500);
+	var slider1 = new PrimitiveSlider(this.canvas.width - (this.canvas.width/ 10), this.canvas.height / 2, 50, 600);
+	var disk = new PictureDisk(this.canvas.width / 2, this.canvas.height / 2, 500, 500);
 	
 	this.listeners = [];
 	
 	stageObject = this;
-	this.slider1.listenToEvent("SLIDE", function() { stageObject.disk.spin(stageObject.slider1.value / 2); });
+	slider1.listenToEvent("SLIDE", function() { disk.spin(slider1.value / 2); });
+	
+	this.objects = [];
+	this.objects.push(disk);
+	this.objects.push(slider1);
 }
 
 var stageObject = null;
 
 Stage.prototype.start = function()
-{
-	this.disk.start();
+{	
+	this.executeFunctionOnObjects("start");
 	
 	var current = this;
 	setInterval(function(){ current.actualize(current); }, 50);
@@ -23,28 +27,36 @@ Stage.prototype.start = function()
 
 Stage.prototype.draw = function()
 {
-	this.disk.draw(this.canvas);
-	this.slider1.draw(this.canvas);
+	this.executeFunctionOnObjects("draw", this.canvas);
 }
 
 Stage.prototype.actualize = function(current)
 {
-	current.disk.spin();
+	current.executeFunctionOnObjects("spin");
 	current.draw();
 }
 
 Stage.prototype.touchStart = function(eventName, touch)
-{
-	if (stageObject.slider1.isTouched(touch.pageX, touch.pageY))
+{	
+	for(var index = 0; index < stageObject.objects.length; index++)
 	{
-		stageObject.slider1.onTouch(touch);
-		stageObject.listenTouch(touch.identifier, stageObject.slider1);
+		if (stageObject.objects[index].isTouched(touch.pageX, touch.pageY))
+		{
+			stageObject.objects[index].onTouch(touch);
+			stageObject.listenTouch(touch.identifier, stageObject.objects[index]);
+		}
 	}
-	
-	if (stageObject.disk.isTouched(touch.pageX, touch.pageY))
+}
+
+Stage.prototype.doubleTouchStart = function(eventName, touch)
+{	
+	for(var index = 0; index < stageObject.objects.length; index++)
 	{
-		stageObject.disk.onTouch(touch);
-		stageObject.listenTouch(touch.identifier, stageObject.disk);
+		if (stageObject.objects[index].isTouched(touch.pageX, touch.pageY))
+		{
+			stageObject.objects[index].onDoubleTouch(touch);
+			stageObject.listenTouch(touch.identifier, stageObject.objects[index]);
+		}
 	}
 }
 
@@ -82,3 +94,13 @@ Stage.prototype.listenTouch = function(touchId, callback)
 	stageObject.listeners[touchId] = callback;
 }
 
+Stage.prototype.executeFunctionOnObjects = function(functionName, functionArguments)
+{
+	for(var index = 0; index < this.objects.length; index++)
+	{
+		if (typeof this.objects[index][functionName] == 'function')
+		{
+			this.objects[index][functionName](functionArguments);
+		}
+	}
+}
