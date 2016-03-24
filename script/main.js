@@ -8,5 +8,6 @@ function initSpinyt()
 	var multitouch = new Multitouch(canvas);
 	multitouch.listenToEvent("TOUCH_START", stage.touchStart);
 	multitouch.listenToEvent("TOUCH_MOVE", stage.touchMove);
-	multitouch.listenToEvent("TOUCH_END", stage.touchEnd);
+	multitouch.listenToEvent("TOUCH_END", stage.touchEnd);  
+  
 }
