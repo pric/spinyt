@@ -5,29 +5,27 @@
     <meta name="viewport" content="width=device-width, user-scalable=no">
     <link rel="stylesheet" type="text/css" href="style/main.css">
 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js"></script>
+    <script src="script/config/constants.js"></script>
 
-  <script src="script/config/constants.js"></script>
+    <script src="script/stage.js"></script>
+    <script src="script/stage/abstractobject.js"></script>
+    <script src="script/stage/abstractdisk.js"></script>
+    <script src="script/stage/abstractslider.js"></script>
+    <script src="script/stage/abstractpopbox.js"></script>
+    <script src="script/sound/abstractsound.js"></script>
 
-	<script src="script/stage.js"></script>
-	<script src="script/stage/abstractobject.js"></script>
-	<script src="script/stage/abstractdisk.js"></script>
-	<script src="script/stage/picturedisk.js"></script>
-	<script src="script/stage/abstractslider.js"></script>
-	<script src="script/stage/primitiveslider.js"></script>
-	<script src="script/stage/abstractpopbox.js"></script>
-	<script src="script/stage/primitivepopbox.js"></script>
-	<script src="script/stage/picturepopbox.js"></script>
+    <script src="script/stage/primitiveslider.js"></script>
+    <script src="script/stage/primitivepopbox.js"></script>
 
-  <script src="script/sound/abstractsound.js"></script>
-  <script src="script/sound/notesound.js"></script>
-  <script src="script/sound/oscillatortype.js"></script>
+    <script src="script/stage/picturedisk.js"></script>
+    <script src="script/stage/picturepopbox.js"></script>
+
+    <script src="script/sound/oscillatorsound.js"></script>
 
     <script src="script/multitouch.js"></script>
-	<script src="script/sound.js"></script>
     <script src="script/main.js"></script>
   </head>
-  <body onload="initSpinyt();" style="background-color: black; color: white;">
+  <body onload="initSpinyt();">
     <canvas id="canvas" width="1024px" height="768px"></canvas>
   </body>
 </html>

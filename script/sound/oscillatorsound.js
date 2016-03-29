@@ -1,16 +1,26 @@
-var NoteSound = function() {
+const OscillatorType  = {
+  TRIANGLE : 'triangle',
+  SAWTOOTH : 'sawtooth',
+  SQUARE : 'square',
+  SINE : 'sine'
+};
+
+var OscillatorSound = function(oscillatorType) {
+
+  this.oscillatorType = oscillatorType;
+
   Sound.apply(this, arguments);
 }
 
-NoteSound.prototype = Object.create(Sound.prototype);
-NoteSound.prototype.constructor = NoteSound;
+OscillatorSound.prototype = Object.create(Sound.prototype);
+OscillatorSound.prototype.constructor = OscillatorSound;
 
-NoteSound.prototype.play = function (frequency, volume) {
+OscillatorSound.prototype.play = function (frequency, volume) {
 
   this.oscillator = this.context.createOscillator();
   var now = this.context.currentTime;
   var gain = this.context.createGain();
-  
+
   gain.connect(this.context.destination);
   gain.gain.setValueAtTime(3, now);
   gain.gain.value = volume;
@@ -19,7 +29,7 @@ NoteSound.prototype.play = function (frequency, volume) {
   this.oscillator.frequency.value = 500 + (2500 * frequency);
   this.oscillator.type = this.oscillatorType;
   this.oscillator.connect(gain);
-  
+
   this.oscillator.start(now);
   this.oscillator.stop(now + 0.5);
 };
