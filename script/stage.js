@@ -1,24 +1,22 @@
 function Stage(canvas)
 {
 	this.canvas = canvas;
-	this.listeners = [];	
+	this.listeners = [];
 	stageObject = this;
-	
+
 	var slider1 = new PrimitiveSlider(this.canvas.width - (this.canvas.width/ 10), this.canvas.height / 2, 50, 600);
 	var disk = new PictureDisk(this.canvas.width / 2, this.canvas.height / 2, 500, 500);
-	var popbox1 = new PrimitivePopbox(64, 64, 128, 128);
-	//var popbox1 = new PicturePopbox(64, 64, 128, 128, 1);
-	var popbox2 = new PicturePopbox(64, 192, 128, 128, 2);
-	var popbox3 = new PicturePopbox(64, 320, 128, 128, 3);
-	var popbox4 = new PicturePopbox(64, 448, 128, 128, 4);
-	var popbox5 = new PicturePopbox(64, 576, 128, 128, 5);
+	//var popbox1 = new PrimitivePopbox(64, 64, 128, 128);
+	var popbox1 = new PicturePopbox(64, 64, 100, 110, 1);
+	var popbox2 = new PicturePopbox(64, 192, 100, 109, 2);
+	var popbox3 = new PicturePopbox(64, 320, 100, 110, 3);
+	var popbox4 = new PicturePopbox(64, 448, 100, 109, 4);
 
 	slider1.listenToEvent("SLIDE", function() { disk.spin(slider1.value / 2); });
-	popbox1.listenToEvent("POP", function() { disk.addPopbox(popbox1.centerX, popbox1.centerY, "#00FF00"); });
-	popbox2.listenToEvent("POP", function() { disk.addPopbox(popbox2.centerX, popbox2.centerY, "#FF0000"); });
-	popbox3.listenToEvent("POP", function() { disk.addPopbox(popbox3.centerX, popbox3.centerY, "#FFFF00"); });
-	popbox4.listenToEvent("POP", function() { disk.addPopbox(popbox4.centerX, popbox4.centerY, "#0000FF"); });
-	popbox5.listenToEvent("POP", function() { disk.addPopbox(popbox5.centerX, popbox5.centerY, "#FFFFFF"); });
+	popbox1.listenToEvent("POP", function() { disk.addPopbox(popbox1.centerX, popbox1.centerY, "#E53131"); });
+	popbox2.listenToEvent("POP", function() { disk.addPopbox(popbox2.centerX, popbox2.centerY, "#5093D2"); });
+	popbox3.listenToEvent("POP", function() { disk.addPopbox(popbox3.centerX, popbox3.centerY, "#8AC050"); });
+	popbox4.listenToEvent("POP", function() { disk.addPopbox(popbox4.centerX, popbox4.centerY, "#DBDF59"); });
 
 	this.objects = [];
 	this.objects.push(disk);
@@ -27,7 +25,6 @@ function Stage(canvas)
 	this.objects.push(popbox2);
 	this.objects.push(popbox3);
 	this.objects.push(popbox4);
-	this.objects.push(popbox5);
 }
 
 var stageObject = null;
@@ -44,7 +41,7 @@ Stage.prototype.draw = function()
 {
 	var ctx = this.canvas.getContext("2d");
 	ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-	
+
 	this.executeFunctionOnObjects("draw", this.canvas);
 }
 
