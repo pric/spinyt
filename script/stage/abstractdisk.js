@@ -41,6 +41,11 @@ Disk.prototype.stop = function ()
 	this.isSpinning = false;
 }
 
+Disk.prototype.pause = function ()
+{
+	this.isSpinning = false;
+}
+
 Disk.prototype.adjustSpin = function (speed)
 {
 	if (speed)
@@ -118,6 +123,16 @@ Disk.prototype.addPopbox = function (posX, posY, color, sound)
 Disk.prototype.addPopboxToDisk = function (angle, radius, color, sound)
 {
 	this.popboxes.push({angle : angle, radius : radius, color : color, sound : sound, played : true});
+}
+
+Disk.prototype.onDoubleTouch = function(object) 
+{
+    this.pause();
+}
+
+Disk.prototype.onDoubleTouchRelease = function(object) 
+{
+    this.start();
 }
 
 Disk.prototype.isTouched = function(x, y) 
