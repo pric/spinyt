@@ -4,9 +4,9 @@ function Stage(canvas)
 	this.listeners = [];
 	stageObject = this;
 
-	var slider1 = new PrimitiveSlider(this.canvas.width - (this.canvas.width/ 10), this.canvas.height / 4, 50, 250);
-	var slider2 = new PrimitiveSlider(this.canvas.width - (this.canvas.width/ 10), (this.canvas.height / 4) * 3, 50, 250);
-	
+	var slider1 = new PictureSlider(this.canvas.width - (this.canvas.width/ 10), this.canvas.height / 4, 54, 280);
+	var slider2 = new PictureSlider(this.canvas.width - (this.canvas.width/ 10), (this.canvas.height / 4) * 3, 54, 280);
+
 	var disk = new PictureDisk(this.canvas.width / 2, this.canvas.height / 2, 725, 725);
 	//var popbox1 = new PrimitivePopbox(64, 64, 128, 128);
 	var popbox1 = new PicturePopbox(64, 576, 100, 110, 1);

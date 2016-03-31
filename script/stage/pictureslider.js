@@ -1,36 +1,45 @@
-var PrimitiveSlider = function() {
+var PictureSlider = function() {
     Slider.apply(this, arguments);
 
-	this.handleHeigth = this.width;
+	// this.handleWidth = 54;
+  // this.handleHeigth = 57;
+  // this.guideWidth = 17;
+  // this.guideHeight = 280;
+
+  this.handleWidth = this.width;
+  this.handleHeigth = this.width + 3;
+  this.guideWidth = 17;
+  this.guideHeight = this.height;
+
+  this.guideImg = new Image();
+  this.handleImg = new Image();
+  this.guideImg.src = 'image/theme_' + THEME_ID + '/sliderguide.png';
+  this.handleImg.src = 'image/theme_' + THEME_ID + '/sliderhandle.png';
 };
 
-PrimitiveSlider.prototype = Object.create(Slider.prototype);
-PrimitiveSlider.prototype.constructor = PrimitiveSlider;
+PictureSlider.prototype = Object.create(Slider.prototype);
+PictureSlider.prototype.constructor = PictureSlider;
 
-PrimitiveSlider.prototype.draw = function(canvas)
+PictureSlider.prototype.draw = function(canvas)
 {
 	var ctx = canvas.getContext("2d");
 
 	ctx.save();
-	ctx.translate(this.centerX - (this.width / 2), this.centerY - (this.height / 2));
+	ctx.translate(this.centerX, this.centerY);
 
-	ctx.fillStyle="#FF0000";
-	ctx.fillRect(0 + (this.width / 2) - 5, 0, 10, this.height);
+  ctx.drawImage(this.guideImg, -this.guideWidth/2, -this.guideHeight / 2, this.guideWidth, this.guideHeight);
 
-	ctx.fillStyle="#0000FF";
-	ctx.fillRect(0, (this.value * this.height / 100) - (this.handleHeigth / 2), this.width - 1, this.handleHeigth);
+  ctx.drawImage(this.handleImg, -this.handleWidth/2, -(this.guideHeight/2) + (this.value * this.guideHeight/100) - (this.handleHeigth/2), this.handleWidth, this.handleHeigth);
 
 	ctx.restore();
 }
 
-PrimitiveSlider.prototype.isTouched = function(x, y)
+PictureSlider.prototype.isTouched = function(x, y)
 {
-	var handleHeigth = this.handleHeigth;
-	var handleWidth = this.width;
-	var handleX = (this.centerX - (handleWidth / 2));
-	var handleY = (this.centerY - (this.height / 2)) + ((this.value * this.height / 100) - (this.handleHeigth / 2));
+	var handleX = (this.centerX - (this.handleWidth / 2));
+	var handleY = (this.centerY - (this.guideHeight / 2)) + (this.value * this.guideHeight / 100) - (this.handleHeigth / 2);
 
-	if (handleY < y && handleY + handleHeigth > y && handleX < x && handleX + handleWidth > x)
+	if (handleY < y && handleY + this.handleHeigth > y && handleX < x && handleX + this.handleWidth > x)
 	{
 		return true;
 	}
