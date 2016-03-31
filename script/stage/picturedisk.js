@@ -35,7 +35,7 @@ PictureDisk.prototype.draw = function(canvas)
 		var popboxX = Math.cos(this.popboxes[index].angle * Math.PI / 180) * this.popboxes[index].radius;
 		var popboxY = Math.sin(this.popboxes[index].angle * Math.PI / 180) * this.popboxes[index].radius;
 				
-		ctx.fillStyle = this.popboxes[index].type;
+		ctx.fillStyle = this.popboxes[index].color;
 		ctx.beginPath();
 		ctx.arc(popboxX, popboxY, 20, 0, 2 * Math.PI);
 		ctx.stroke();

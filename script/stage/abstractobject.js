@@ -67,7 +67,7 @@ StageObject.prototype.notifyListeners = function(eventName)
 	{
 		for(var callbackIndex = 0; callbackIndex < this.listeners[eventName].length; callbackIndex++)
 		{
-			this.listeners[eventName][callbackIndex](arguments);
+			this.listeners[eventName][callbackIndex].apply(null, arguments);
 		}
 	}
 }

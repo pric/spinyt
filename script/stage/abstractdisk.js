@@ -55,15 +55,21 @@ Disk.prototype.spin = function ()
 	{
 		this.angle += this.spinningSpeed;
 		
+		var barAngle = 270 - this.getDegreeAngle();
+		if (barAngle < 0)
+		{
+			barAngle = 360 + barAngle;
+		}
+		
 		for(var index = 0; index < this.popboxes.length; index++)
 		{
-			var newAngle = this.getDegreeAngle() + this.popboxes[index].angle;
-			if (newAngle > -90 && !this.popboxes[index].played)
+			if (this.popboxes[index].angle > barAngle && !this.popboxes[index].played)
 			{
 				this.popboxes[index].played = true;
-				console.log("PlaySound! (" + index + ")");
+				this.notifyListeners("PLAYSOUND", this.popboxes[index].sound, this.popboxes[index].radius / this.getRadius());
+				
 			}
-			else if (newAngle < -90)
+			else if (this.popboxes[index].angle < barAngle)
 			{
 				this.popboxes[index].played = false;
 			}
@@ -73,11 +79,10 @@ Disk.prototype.spin = function ()
 	if (this.getDegreeAngle() > 360)
 	{
 		this.angle = this.angle - 360;
-		console.log("Reset");
 	}
 }
 
-Disk.prototype.addPopbox = function (posX, posY, popboxType)
+Disk.prototype.addPopbox = function (posX, posY, color, sound)
 {
 	var radiusX = Math.pow(posX - this.centerX, 2);
 	var radiusY = Math.pow(posY - this.centerY, 2);
@@ -85,25 +90,34 @@ Disk.prototype.addPopbox = function (posX, posY, popboxType)
 	
 	if (radius < this.getRadius())
 	{
-		var x = this.centerX - posX;
-		var y = this.centerY - posY;
+		var x = posX - this.centerX;
+		var y = posY - this.centerY;
 		var angle = Math.atan(y/x);
 		angle = angle / Math.PI * 180;
 		
-		if (x > 0)
+		if (x < 0)
 		{
-			angle -= 180;
+			angle = 180 + angle;
+		}
+			
+		if (angle < 0)
+		{
+			angle = 360 + angle;
 		}
 		
 		var newAngle = angle - this.getDegreeAngle();
+		if (newAngle < 0)
+		{
+			newAngle = 360 + newAngle;
+		}
 		
-		this.addPopboxToDisk(newAngle, radius, popboxType);
+		this.addPopboxToDisk(newAngle, radius, color, sound);
 	}
 }
 
-Disk.prototype.addPopboxToDisk = function (angle, radius, popboxType)
+Disk.prototype.addPopboxToDisk = function (angle, radius, color, sound)
 {
-	this.popboxes.push({angle : angle, radius : radius, type : popboxType, played : false});
+	this.popboxes.push({angle : angle, radius : radius, color : color, sound : sound, played : true});
 }
 
 Disk.prototype.isTouched = function(x, y) 

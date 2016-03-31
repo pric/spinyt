@@ -5,9 +5,7 @@ const OscillatorType  = {
   SINE : 'sine'
 };
 
-var OscillatorSound = function(oscillatorType) {
-
-  this.oscillatorType = oscillatorType;
+var OscillatorSound = function(audioContext) {
 
   Sound.apply(this, arguments);
 }
@@ -15,7 +13,7 @@ var OscillatorSound = function(oscillatorType) {
 OscillatorSound.prototype = Object.create(Sound.prototype);
 OscillatorSound.prototype.constructor = OscillatorSound;
 
-OscillatorSound.prototype.play = function (frequency, volume) {
+OscillatorSound.prototype.play = function (oscillatorType, frequency, volume) {
 
   this.oscillator = this.context.createOscillator();
   var now = this.context.currentTime;
@@ -25,7 +23,7 @@ OscillatorSound.prototype.play = function (frequency, volume) {
   gain.gain.value = volume;
 
   this.oscillator.frequency.value = 500 + (2500 * frequency);
-  this.oscillator.type = this.oscillatorType;
+  this.oscillator.type = oscillatorType;
   this.oscillator.connect(gain);
 
   this.oscillator.start(now);

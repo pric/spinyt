@@ -14,18 +14,15 @@ function Stage(canvas)
 	var popbox3 = new PicturePopbox(64, 320, 100, 110, 3);
 	var popbox4 = new PicturePopbox(64, 448, 100, 109, 4);
 	
-	var audioContext = new AudioContext();
-	var oscillatorSound1 = new OscillatorSound(audioContext, OscillatorType.TRIANGLE);
-	var oscillatorSound2 = new OscillatorSound(audioContext, OscillatorType.SAWTOOTH);
-	var oscillatorSound3 = new OscillatorSound(audioContext, OscillatorType.SQUARE);
-	var oscillatorSound4 = new OscillatorSound(audioContext, OscillatorType.SINE);
+	var oscillatorSound = new OscillatorSound(new AudioContext());
 
+	disk.listenToEvent("PLAYSOUND", function(eventName, oscillatorType, frequency) { oscillatorSound.play(oscillatorType, frequency, 1); });
 	slider1.listenToEvent("SLIDE", function() { disk.adjustSpin(slider1.value / 5); });
-	popbox1.listenToEvent("POP", function() { disk.addPopbox(popbox1.centerX, popbox1.centerY, "#E53131"); });
-	popbox2.listenToEvent("POP", function() { disk.addPopbox(popbox2.centerX, popbox2.centerY, "#5093D2"); });
-	popbox3.listenToEvent("POP", function() { disk.addPopbox(popbox3.centerX, popbox3.centerY, "#8AC050"); });
-	popbox4.listenToEvent("POP", function() { disk.addPopbox(popbox4.centerX, popbox4.centerY, "#DBDF59"); });
-
+	popbox1.listenToEvent("POP", function() { disk.addPopbox(popbox1.centerX, popbox1.centerY, "#E53131", OscillatorType.TRIANGLE); });
+	popbox2.listenToEvent("POP", function() { disk.addPopbox(popbox2.centerX, popbox2.centerY, "#5093D2", OscillatorType.SAWTOOTH); });
+	popbox3.listenToEvent("POP", function() { disk.addPopbox(popbox3.centerX, popbox3.centerY, "#8AC050", OscillatorType.SQUARE); });
+	popbox4.listenToEvent("POP", function() { disk.addPopbox(popbox4.centerX, popbox4.centerY, "#DBDF59", OscillatorType.SINE); });
+	
 	this.objects = [];
 	this.objects.push(disk);
 	this.objects.push(slider1);
