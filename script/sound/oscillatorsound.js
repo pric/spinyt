@@ -22,14 +22,12 @@ OscillatorSound.prototype.play = function (frequency, volume) {
   var gain = this.context.createGain();
 
   gain.connect(this.context.destination);
-  gain.gain.setValueAtTime(3, now);
   gain.gain.value = volume;
-  gain.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
 
   this.oscillator.frequency.value = 500 + (2500 * frequency);
   this.oscillator.type = this.oscillatorType;
   this.oscillator.connect(gain);
 
   this.oscillator.start(now);
-  this.oscillator.stop(now + 0.5);
+  this.oscillator.stop(now + 0.2);
 };
