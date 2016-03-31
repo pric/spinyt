@@ -105,6 +105,14 @@ Stage.prototype.touchEnd = function(eventName, touch)
 	}
 }
 
+Stage.prototype.doubleTouchEnd = function(eventName, touch)
+{
+	if (stageObject.listeners[touch.identifier])
+	{
+		stageObject.listeners[touch.identifier].onDoubleTouchRelease();
+	}
+}
+
 Stage.prototype.listenTouch = function(touchId, callback)
 {
 	if (!stageObject.listeners)

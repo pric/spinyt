@@ -36,6 +36,11 @@ StageObject.prototype.onDoubleTouch = function(object)
     console.log("Double Touched");
 }
 
+StageObject.prototype.onDoubleTouchRelease = function(object) 
+{
+    console.log("Double Touched Release");
+}
+
 StageObject.prototype.onMove = function(object) 
 {
     console.log("Move");
