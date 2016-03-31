@@ -14,25 +14,30 @@ PictureDisk.prototype.draw = function(canvas)
 	var radiusY = this.imageObj.width / 2;
 	
 	var ctx = canvas.getContext("2d");
-	
+		
 	ctx.save();
 	ctx.translate(this.centerX, this.centerY);
 	
 	ctx.rotate(this.getRadianAngle());
+    ctx.drawImage(this.imageObj, -this.imageObj.width / 2, -this.imageObj.height / 2);
+	ctx.rotate( - this.getRadianAngle());
 	
 	ctx.beginPath();
-	ctx.moveTo(0,0);
-	ctx.lineTo(this.getRadius(), 0);
+    ctx.moveTo(0, 0);
+	ctx.lineTo(0, -this.getRadius());
 	ctx.strokeStyle = '#FFFFFF';
 	ctx.stroke();
 	
-    ctx.drawImage(this.imageObj, -this.imageObj.width / 2, -this.imageObj.height / 2);
+	ctx.rotate(this.getRadianAngle());
 	
 	for(var index = 0; index < this.popboxes.length; index++)
 	{
+		var popboxX = Math.cos(this.popboxes[index].angle * Math.PI / 180) * this.popboxes[index].radius;
+		var popboxY = Math.sin(this.popboxes[index].angle * Math.PI / 180) * this.popboxes[index].radius;
+				
 		ctx.fillStyle = this.popboxes[index].type;
 		ctx.beginPath();
-		ctx.arc(this.popboxes[index].posX - this.centerX, this.popboxes[index].posY - this.centerY, 20, 0, 2 * Math.PI);
+		ctx.arc(popboxX, popboxY, 20, 0, 2 * Math.PI);
 		ctx.stroke();
 		ctx.fill();
 	}

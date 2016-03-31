@@ -13,8 +13,14 @@ function Stage(canvas)
 	var popbox2 = new PicturePopbox(64, 192, 100, 109, 2);
 	var popbox3 = new PicturePopbox(64, 320, 100, 110, 3);
 	var popbox4 = new PicturePopbox(64, 448, 100, 109, 4);
+	
+	var audioContext = new AudioContext();
+	var oscillatorSound1 = new OscillatorSound(audioContext, OscillatorType.TRIANGLE);
+	var oscillatorSound2 = new OscillatorSound(audioContext, OscillatorType.SAWTOOTH);
+	var oscillatorSound3 = new OscillatorSound(audioContext, OscillatorType.SQUARE);
+	var oscillatorSound4 = new OscillatorSound(audioContext, OscillatorType.SINE);
 
-	slider1.listenToEvent("SLIDE", function() { disk.adjustSpin(slider1.value / 2); });
+	slider1.listenToEvent("SLIDE", function() { disk.adjustSpin(slider1.value / 5); });
 	popbox1.listenToEvent("POP", function() { disk.addPopbox(popbox1.centerX, popbox1.centerY, "#E53131"); });
 	popbox2.listenToEvent("POP", function() { disk.addPopbox(popbox2.centerX, popbox2.centerY, "#5093D2"); });
 	popbox3.listenToEvent("POP", function() { disk.addPopbox(popbox3.centerX, popbox3.centerY, "#8AC050"); });
@@ -37,7 +43,7 @@ Stage.prototype.start = function()
 	this.executeFunctionOnObjects("start");
 
 	var current = this;
-	setInterval(function(){ current.actualize(current); }, 50);
+	setInterval(function(){ current.actualize(current); }, 25);
 }
 
 Stage.prototype.draw = function()

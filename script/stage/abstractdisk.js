@@ -54,11 +54,26 @@ Disk.prototype.spin = function ()
 	if (this.isSpinning)
 	{
 		this.angle += this.spinningSpeed;
+		
+		for(var index = 0; index < this.popboxes.length; index++)
+		{
+			var newAngle = this.getDegreeAngle() + this.popboxes[index].angle;
+			if (newAngle > -90 && !this.popboxes[index].played)
+			{
+				this.popboxes[index].played = true;
+				console.log("PlaySound! (" + index + ")");
+			}
+			else if (newAngle < -90)
+			{
+				this.popboxes[index].played = false;
+			}
+		}
 	}
 	
-	if (this.angle > 360)
+	if (this.getDegreeAngle() > 360)
 	{
 		this.angle = this.angle - 360;
+		console.log("Reset");
 	}
 }
 
@@ -70,27 +85,25 @@ Disk.prototype.addPopbox = function (posX, posY, popboxType)
 	
 	if (radius < this.getRadius())
 	{
-		console.log(this.getDegreeAngle());
-		
 		var x = this.centerX - posX;
 		var y = this.centerY - posY;
 		var angle = Math.atan(y/x);
-		
 		angle = angle / Math.PI * 180;
-		console.log(angle);
 		
+		if (x > 0)
+		{
+			angle -= 180;
+		}
 		
-		var newPosX = posX;
-		var newPosY = posY;
+		var newAngle = angle - this.getDegreeAngle();
 		
-		
-		this.addPopboxToDisk(newPosX, newPosY, popboxType);
+		this.addPopboxToDisk(newAngle, radius, popboxType);
 	}
 }
 
-Disk.prototype.addPopboxToDisk = function (posX, posY, popboxType)
+Disk.prototype.addPopboxToDisk = function (angle, radius, popboxType)
 {
-	this.popboxes.push({posX : posX, posY : posY, type : popboxType});
+	this.popboxes.push({angle : angle, radius : radius, type : popboxType, played : false});
 }
 
 Disk.prototype.isTouched = function(x, y) 
