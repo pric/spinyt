@@ -4,15 +4,17 @@ function Stage(canvas)
 	this.listeners = [];
 	stageObject = this;
 
-	var slider1 = new PrimitiveSlider(this.canvas.width - (this.canvas.width/ 10), this.canvas.height / 2, 50, 600);
-	var disk = new PictureDisk(this.canvas.width / 2, this.canvas.height / 2, 500, 500);
+	var slider1 = new PrimitiveSlider(this.canvas.width - (this.canvas.width/ 10), this.canvas.height / 4, 50, 250);
+	var slider2 = new PrimitiveSlider(this.canvas.width - (this.canvas.width/ 10), (this.canvas.height / 4) * 3, 50, 250);
+	
+	var disk = new PictureDisk(this.canvas.width / 2, this.canvas.height / 2, 725, 725);
 	//var popbox1 = new PrimitivePopbox(64, 64, 128, 128);
-	var popbox1 = new PicturePopbox(64, 64, 100, 110, 1);
+	var popbox1 = new PicturePopbox(64, 576, 100, 110, 1);
 	var popbox2 = new PicturePopbox(64, 192, 100, 109, 2);
 	var popbox3 = new PicturePopbox(64, 320, 100, 110, 3);
 	var popbox4 = new PicturePopbox(64, 448, 100, 109, 4);
 
-	slider1.listenToEvent("SLIDE", function() { disk.spin(slider1.value / 2); });
+	slider1.listenToEvent("SLIDE", function() { disk.adjustSpin(slider1.value / 2); });
 	popbox1.listenToEvent("POP", function() { disk.addPopbox(popbox1.centerX, popbox1.centerY, "#E53131"); });
 	popbox2.listenToEvent("POP", function() { disk.addPopbox(popbox2.centerX, popbox2.centerY, "#5093D2"); });
 	popbox3.listenToEvent("POP", function() { disk.addPopbox(popbox3.centerX, popbox3.centerY, "#8AC050"); });
@@ -21,6 +23,7 @@ function Stage(canvas)
 	this.objects = [];
 	this.objects.push(disk);
 	this.objects.push(slider1);
+	this.objects.push(slider2);
 	this.objects.push(popbox1);
 	this.objects.push(popbox2);
 	this.objects.push(popbox3);

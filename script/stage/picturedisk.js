@@ -20,6 +20,12 @@ PictureDisk.prototype.draw = function(canvas)
 	
 	ctx.rotate(this.getRadianAngle());
 	
+	ctx.beginPath();
+	ctx.moveTo(0,0);
+	ctx.lineTo(this.getRadius(), 0);
+	ctx.strokeStyle = '#FFFFFF';
+	ctx.stroke();
+	
     ctx.drawImage(this.imageObj, -this.imageObj.width / 2, -this.imageObj.height / 2);
 	
 	for(var index = 0; index < this.popboxes.length; index++)

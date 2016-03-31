@@ -41,16 +41,24 @@ Disk.prototype.stop = function ()
 	this.isSpinning = false;
 }
 
-Disk.prototype.spin = function (speed)
+Disk.prototype.adjustSpin = function (speed)
 {
 	if (speed)
 	{
 		this.spinningSpeed = speed;
 	}
-	
+}
+
+Disk.prototype.spin = function ()
+{
 	if (this.isSpinning)
 	{
 		this.angle += this.spinningSpeed;
+	}
+	
+	if (this.angle > 360)
+	{
+		this.angle = this.angle - 360;
 	}
 }
 
@@ -62,7 +70,21 @@ Disk.prototype.addPopbox = function (posX, posY, popboxType)
 	
 	if (radius < this.getRadius())
 	{
-		this.addPopboxToDisk(posX, posY, popboxType);
+		console.log(this.getDegreeAngle());
+		
+		var x = this.centerX - posX;
+		var y = this.centerY - posY;
+		var angle = Math.atan(y/x);
+		
+		angle = angle / Math.PI * 180;
+		console.log(angle);
+		
+		
+		var newPosX = posX;
+		var newPosY = posY;
+		
+		
+		this.addPopboxToDisk(newPosX, newPosY, popboxType);
 	}
 }
 
