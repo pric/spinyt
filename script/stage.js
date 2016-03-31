@@ -68,7 +68,6 @@ Stage.prototype.touchStart = function(eventName, touch)
 
 Stage.prototype.doubleTouchStart = function(eventName, touch)
 {
-	console.log("anus");
 	for(var index = 0; index < stageObject.objects.length; index++)
 	{
 		if (stageObject.objects[index].isTouched(touch.pageX, touch.pageY))
