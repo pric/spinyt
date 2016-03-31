@@ -15,17 +15,18 @@ OscillatorSound.prototype.constructor = OscillatorSound;
 
 OscillatorSound.prototype.play = function (oscillatorType, frequency, volume) {
 
-  this.oscillator = this.context.createOscillator();
   var now = this.context.currentTime;
   var gain = this.context.createGain();
-
   gain.connect(this.context.destination);
-  gain.gain.value = volume;
+  gain.gain.setValueAtTime(1, now);
+  gain.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
 
-  this.oscillator.frequency.value = 500 + (2500 * frequency);
-  this.oscillator.type = oscillatorType;
+  this.oscillator = this.context.createOscillator();
+  this.oscillator.frequency = 500;
+  this.oscillator.detune.value = 1000 * frequency;
   this.oscillator.connect(gain);
-
+  this.oscillator.type = oscillatorType;
   this.oscillator.start(now);
-  this.oscillator.stop(now + 0.2);
+  this.oscillator.stop(now + 0.5);
+
 };
