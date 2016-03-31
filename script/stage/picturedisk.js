@@ -23,7 +23,7 @@ PictureDisk.prototype.draw = function(canvas)
 	ctx.rotate( - this.getRadianAngle());
 
 	ctx.beginPath();
-  ctx.moveTo(0, -35);
+	ctx.moveTo(0, -35);
 	ctx.lineTo(0, -this.getRadius());
 	ctx.strokeStyle = '#FFFFFF';
 	ctx.stroke();

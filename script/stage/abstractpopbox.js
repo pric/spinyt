@@ -10,6 +10,8 @@ var Popbox = function() {
 	this.startUpPosY = arguments[1];
 	this.startUpWidth = arguments[2];
 	this.startUpHeigth = arguments[3];
+	this.popboxColor = arguments[4];
+	this.type = arguments[5];
 };
 
 Popbox.prototype = Object.create(StageObject.prototype);

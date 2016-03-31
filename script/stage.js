@@ -9,19 +9,20 @@ function Stage(canvas)
 
 	var disk = new PictureDisk(this.canvas.width / 2, this.canvas.height / 2, 725, 725);
 	//var popbox1 = new PrimitivePopbox(64, 64, 128, 128);
-	var popbox1 = new PicturePopbox(64, 576, 100, 110, 1);
-	var popbox2 = new PicturePopbox(64, 192, 100, 109, 2);
-	var popbox3 = new PicturePopbox(64, 320, 100, 110, 3);
-	var popbox4 = new PicturePopbox(64, 448, 100, 109, 4);
+	var popbox1 = new PicturePopbox(64, 576, 100, 110, "E53131", 1);
+	var popbox2 = new PicturePopbox(64, 192, 100, 109, "5093D2", 2);
+	var popbox3 = new PicturePopbox(64, 320, 100, 110, "8AC050", 3);
+	var popbox4 = new PicturePopbox(64, 448, 100, 109, "DBDF59", 4);
 	
 	var oscillatorSound = new OscillatorSound(new AudioContext());
 
 	disk.listenToEvent("PLAYSOUND", function(eventName, oscillatorType, frequency) { oscillatorSound.play(oscillatorType, frequency, 1); });
+	disk.listenToEvent("POPOUT", function(eventName, type, touch) { var popbox = eval("popbox" + type); if (popbox) { popbox.onTouch(touch); } });
 	slider1.listenToEvent("SLIDE", function() { disk.adjustSpin(slider1.value / 5); });
-	popbox1.listenToEvent("POP", function() { disk.addPopbox(popbox1.centerX, popbox1.centerY, "E53131", OscillatorType.TRIANGLE); });
-	popbox2.listenToEvent("POP", function() { disk.addPopbox(popbox2.centerX, popbox2.centerY, "5093D2", OscillatorType.SAWTOOTH); });
-	popbox3.listenToEvent("POP", function() { disk.addPopbox(popbox3.centerX, popbox3.centerY, "8AC050", OscillatorType.SQUARE); });
-	popbox4.listenToEvent("POP", function() { disk.addPopbox(popbox4.centerX, popbox4.centerY, "DBDF59", OscillatorType.SINE); });
+	popbox1.listenToEvent("POP", function() { disk.addPopbox(popbox1.centerX, popbox1.centerY, popbox1.popboxColor, OscillatorType.TRIANGLE, popbox1.type); });
+	popbox2.listenToEvent("POP", function() { disk.addPopbox(popbox2.centerX, popbox2.centerY, popbox2.popboxColor, OscillatorType.SAWTOOTH, popbox2.type); });
+	popbox3.listenToEvent("POP", function() { disk.addPopbox(popbox3.centerX, popbox3.centerY, popbox3.popboxColor, OscillatorType.SQUARE, popbox3.type); });
+	popbox4.listenToEvent("POP", function() { disk.addPopbox(popbox4.centerX, popbox4.centerY, popbox4.popboxColor, OscillatorType.SINE, popbox4.type); });
 	
 	this.objects = [];
 	this.objects.push(disk);

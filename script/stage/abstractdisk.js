@@ -84,7 +84,7 @@ Disk.prototype.spin = function ()
 	}
 }
 
-Disk.prototype.addPopbox = function (posX, posY, color, sound)
+Disk.prototype.addPopbox = function (posX, posY, color, sound, type)
 {
 	var radiusX = Math.pow(posX - this.centerX, 2);
 	var radiusY = Math.pow(posY - this.centerY, 2);
@@ -113,13 +113,45 @@ Disk.prototype.addPopbox = function (posX, posY, color, sound)
 			newAngle = 360 + newAngle;
 		}
 
-		this.addPopboxToDisk(newAngle, radius, color, sound);
+		this.addPopboxToDisk(newAngle, radius, color, sound, type);
 	}
 }
 
-Disk.prototype.addPopboxToDisk = function (angle, radius, color, sound)
+Disk.prototype.addPopboxToDisk = function (angle, radius, color, sound, type)
 {
-	this.popboxes.push({angle : angle, radius : radius, color : color, sound : sound, played : true, pulse: PULSE_ME_LIKE_YOU_OWN_ME});
+	this.popboxes.push({angle : angle, radius : radius, color : color, sound : sound, played : true, pulse: PULSE_ME_LIKE_YOU_OWN_ME, type: type});
+}
+
+Disk.prototype.onTouch = function(object) 
+{
+	var smallestIndex = -1;
+	var smallestValue = 1000000;
+	for(var index = 0; index < this.popboxes.length; index++)
+	{
+		var newAngle = this.popboxes[index].angle + this.getDegreeAngle();
+		if (newAngle > 360)
+		{
+			newAngle -= 360;
+		}
+		
+		var popboxX = (Math.cos(newAngle * Math.PI / 180) * this.popboxes[index].radius) + this.centerX;
+		var popboxY = (Math.sin(newAngle * Math.PI / 180) * this.popboxes[index].radius) + this.centerY;
+		
+		var radiusX = Math.pow(popboxX - object.pageX, 2);
+		var radiusY = Math.pow(popboxY - object.pageY, 2);
+		var radius = Math.sqrt(radiusX + radiusY);
+		
+		if (radius < 20 && radius < smallestValue)
+		{
+			smallestIndex = index;
+		}
+	}
+	
+	if (smallestIndex >= 0 && smallestIndex < this.popboxes.length)
+	{
+		this.notifyListeners("POPOUT", this.popboxes[smallestIndex].type, object);
+		this.popboxes.splice(smallestIndex, 1);
+	}
 }
 
 Disk.prototype.onDoubleTouch = function(object)

@@ -2,7 +2,7 @@ var PicturePopbox = function() {
     Popbox.apply(this, arguments);
 	
 	this.imageObj = new Image();
-	this.imageObj.src = 'image/theme_' + THEME_ID + '/icon_' + arguments[4] + '.png';
+	this.imageObj.src = 'image/theme_' + THEME_ID + '/icon_' + arguments[5] + '.png';
 };
 
 PicturePopbox.prototype = Object.create(Popbox.prototype);
