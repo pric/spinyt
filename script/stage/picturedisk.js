@@ -21,7 +21,7 @@ PictureDisk.prototype.draw = function(canvas)
 	ctx.rotate(this.getRadianAngle());
 
   ctx.drawImage(this.imageObj, -this.imageObj.width / 2, -this.imageObj.height / 2);
-
+  
 	for(var index = 0; index < this.popboxes.length; index++)
 	{
 		ctx.fillStyle = this.popboxes[index].type;
