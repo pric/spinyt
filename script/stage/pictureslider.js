@@ -1,11 +1,6 @@
 var PictureSlider = function() {
     Slider.apply(this, arguments);
 
-	// this.handleWidth = 54;
-  // this.handleHeigth = 57;
-  // this.guideWidth = 17;
-  // this.guideHeight = 280;
-
   this.handleWidth = this.width;
   this.handleHeigth = this.width + 3;
   this.guideWidth = 17;

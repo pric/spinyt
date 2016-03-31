@@ -21,20 +21,19 @@ PictureDisk.prototype.draw = function(canvas)
 	ctx.rotate(this.getRadianAngle());
     ctx.drawImage(this.imageObj, -this.imageObj.width / 2, -this.imageObj.height / 2);
 	ctx.rotate( - this.getRadianAngle());
-	
+
 	ctx.beginPath();
-    ctx.moveTo(0, 0);
+  ctx.moveTo(0, -35);
 	ctx.lineTo(0, -this.getRadius());
 	ctx.strokeStyle = '#FFFFFF';
 	ctx.stroke();
-	
+
 	ctx.rotate(this.getRadianAngle());
-	
+
 	for(var index = 0; index < this.popboxes.length; index++)
 	{
 		var popboxX = Math.cos(this.popboxes[index].angle * Math.PI / 180) * this.popboxes[index].radius;
 		var popboxY = Math.sin(this.popboxes[index].angle * Math.PI / 180) * this.popboxes[index].radius;
-		
 		var fillStyle = this.popboxes[index].color;
 		if (this.popboxes[index].pulse > 0)
 		{
