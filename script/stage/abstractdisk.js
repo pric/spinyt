@@ -72,6 +72,7 @@ Disk.prototype.spin = function ()
 			{
 				this.popboxes[index].played = true;
 				this.notifyListeners("PLAYSOUND", this.popboxes[index].sound, this.popboxes[index].radius / this.getRadius());
+				this.popboxes[index].pulse = PULSE_ME_LIKE_YOU_OWN_ME;
 				
 			}
 			else if (this.popboxes[index].angle < barAngle)
@@ -122,7 +123,7 @@ Disk.prototype.addPopbox = function (posX, posY, color, sound)
 
 Disk.prototype.addPopboxToDisk = function (angle, radius, color, sound)
 {
-	this.popboxes.push({angle : angle, radius : radius, color : color, sound : sound, played : true});
+	this.popboxes.push({angle : angle, radius : radius, color : color, sound : sound, played : true, pulse: PULSE_ME_LIKE_YOU_OWN_ME});
 }
 
 Disk.prototype.onDoubleTouch = function(object) 

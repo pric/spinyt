@@ -18,10 +18,10 @@ function Stage(canvas)
 
 	disk.listenToEvent("PLAYSOUND", function(eventName, oscillatorType, frequency) { oscillatorSound.play(oscillatorType, frequency, 1); });
 	slider1.listenToEvent("SLIDE", function() { disk.adjustSpin(slider1.value / 5); });
-	popbox1.listenToEvent("POP", function() { disk.addPopbox(popbox1.centerX, popbox1.centerY, "#E53131", OscillatorType.TRIANGLE); });
-	popbox2.listenToEvent("POP", function() { disk.addPopbox(popbox2.centerX, popbox2.centerY, "#5093D2", OscillatorType.SAWTOOTH); });
-	popbox3.listenToEvent("POP", function() { disk.addPopbox(popbox3.centerX, popbox3.centerY, "#8AC050", OscillatorType.SQUARE); });
-	popbox4.listenToEvent("POP", function() { disk.addPopbox(popbox4.centerX, popbox4.centerY, "#DBDF59", OscillatorType.SINE); });
+	popbox1.listenToEvent("POP", function() { disk.addPopbox(popbox1.centerX, popbox1.centerY, "E53131", OscillatorType.TRIANGLE); });
+	popbox2.listenToEvent("POP", function() { disk.addPopbox(popbox2.centerX, popbox2.centerY, "5093D2", OscillatorType.SAWTOOTH); });
+	popbox3.listenToEvent("POP", function() { disk.addPopbox(popbox3.centerX, popbox3.centerY, "8AC050", OscillatorType.SQUARE); });
+	popbox4.listenToEvent("POP", function() { disk.addPopbox(popbox4.centerX, popbox4.centerY, "DBDF59", OscillatorType.SINE); });
 	
 	this.objects = [];
 	this.objects.push(disk);

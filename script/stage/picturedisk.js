@@ -34,8 +34,26 @@ PictureDisk.prototype.draw = function(canvas)
 	{
 		var popboxX = Math.cos(this.popboxes[index].angle * Math.PI / 180) * this.popboxes[index].radius;
 		var popboxY = Math.sin(this.popboxes[index].angle * Math.PI / 180) * this.popboxes[index].radius;
-				
-		ctx.fillStyle = this.popboxes[index].color;
+		
+		var fillStyle = this.popboxes[index].color;
+		if (this.popboxes[index].pulse > 0)
+		{
+			this.popboxes[index].pulse--;
+			
+			if (this.popboxes[index].pulse < PULSE_ME_LIKE_YOU_OWN_ME / 2)
+			{
+				fillStyle = (parseInt(fillStyle, 16) + parseInt("101010", 16)).toString(16);
+			}
+			else
+			{
+				fillStyle = (parseInt(fillStyle, 16) - parseInt("101010", 16)).toString(16);
+			}
+			while (fillStyle.length < 6) { fillStyle = '0' + fillStyle; } // Zero pad.
+		}
+		
+		this.popboxes[index].color = fillStyle;
+		
+		ctx.fillStyle = "#" + fillStyle;
 		ctx.beginPath();
 		ctx.arc(popboxX, popboxY, 20, 0, 2 * Math.PI);
 		ctx.stroke();
