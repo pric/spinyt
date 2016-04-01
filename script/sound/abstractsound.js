@@ -5,7 +5,14 @@ var Sound = function(context){
   }
 
   this.context = context;
+  this.volume = 0;
 
 }
 
 Sound.prototype.play = function () {};
+
+
+Sound.prototype.setVolume = function(volume)
+{
+  this.volume = volume;
+}

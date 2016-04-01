@@ -13,13 +13,20 @@ var OscillatorSound = function(audioContext) {
 OscillatorSound.prototype = Object.create(Sound.prototype);
 OscillatorSound.prototype.constructor = OscillatorSound;
 
-OscillatorSound.prototype.play = function (oscillatorType, frequency, volume) {
+OscillatorSound.prototype.play = function (oscillatorType, frequency) {
+
+  console.log(this.volume);
 
   var frequencyIndex = FREQUENCIES.length - Math.round(frequency*FREQUENCIES.length);
   var now = this.context.currentTime;
   var gain = this.context.createGain();
+  var volumeNode = this.context.createGain();
 
-  gain.connect(this.context.destination);
+
+  volumeNode.connect(this.context.destination);
+  volumeNode.gain.value = this.volume / 100;
+
+  gain.connect(volumeNode);
   gain.gain.setValueAtTime(1, now);
   gain.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
 
