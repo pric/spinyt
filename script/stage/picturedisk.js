@@ -10,6 +10,9 @@ PictureDisk.prototype.constructor = PictureDisk;
 
 PictureDisk.prototype.draw = function(canvas)
 {
+  var backgroundIndicatorColor = '#494949';
+  var centerRadius = 35;
+
   var radiusX = this.imageObj.width / 2;
   var radiusY = this.imageObj.width / 2;
 
@@ -23,8 +26,8 @@ PictureDisk.prototype.draw = function(canvas)
 
   if(true) {
 
-    ctx.strokeStyle = 'rgba(215,85,85,0.4)';
-    ctx.lineWidth = 3;
+    ctx.strokeStyle = backgroundIndicatorColor;
+    ctx.lineWidth = 1;
 
     ctx.beginPath();
     ctx.moveTo(0, -35);
@@ -65,19 +68,18 @@ PictureDisk.prototype.draw = function(canvas)
     ctx.moveTo(-25, -25);
     ctx.lineTo(-(this.getRadius()-106),-(this.getRadius()-106));
     ctx.stroke();
-    
+
   }
 
-  ctx.rotate( - this.getRadianAngle());
+  for(var arcIndex = 1; arcIndex < FREQUENCIES.length; arcIndex++) {
 
-  ctx.beginPath();
-  ctx.moveTo(0, -35);
-  ctx.lineTo(0, -this.getRadius());
-  ctx.lineWidth = 3;
-  ctx.strokeStyle = 'rgba(255,255,255,0.4)';
-  ctx.stroke();
+    ctx.strokeStyle = backgroundIndicatorColor;
+    ctx.lineWidth = 0.75;
+    ctx.beginPath();
+    ctx.arc(0, 0, (this.getRadius() - centerRadius) / FREQUENCIES.length * arcIndex + centerRadius, 0, 2 * Math.PI);
+    ctx.stroke();
 
-  ctx.rotate(this.getRadianAngle());
+  }
 
   for(var index = 0; index < this.popboxes.length; index++)
   {
@@ -106,6 +108,23 @@ PictureDisk.prototype.draw = function(canvas)
     ctx.arc(popboxX, popboxY, 20, 0, 2 * Math.PI);
     ctx.stroke();
     ctx.fill();
+  }
+
+  ctx.rotate( - this.getRadianAngle());
+
+  ctx.beginPath();
+  ctx.moveTo(0, -35);
+  ctx.lineTo(0, -this.getRadius());
+  ctx.lineWidth = 5;
+  ctx.strokeStyle = '#a366ff';
+  ctx.stroke();
+
+  for(var notesIndex = 0; notesIndex < NOTES.length; notesIndex ++)
+  {
+    var division = (this.getRadius() - centerRadius) / NOTES.length;
+    ctx.font = "12px Comic Sans MS";
+    ctx.fillStyle = "#a366ff";
+    ctx.fillText(NOTES[NOTES.length - notesIndex - 1], 7, - (division * notesIndex) - centerRadius - (division / 2) + 5);
   }
 
   ctx.restore();

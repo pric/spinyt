@@ -15,8 +15,7 @@ OscillatorSound.prototype.constructor = OscillatorSound;
 
 OscillatorSound.prototype.play = function (oscillatorType, frequency, volume) {
 
-  var frequencies = [261.63, 277.18, 293.66, 211.13, 229.63, 349.23, 369.99, 392.00, 415.30, 440.00, 466.16, 493.88];
-  var frequencyIndex = frequencies.length - Math.round(frequency*frequencies.length);
+  var frequencyIndex = FREQUENCIES.length - Math.round(frequency*FREQUENCIES.length);
   var now = this.context.currentTime;
   var gain = this.context.createGain();
 
@@ -25,7 +24,7 @@ OscillatorSound.prototype.play = function (oscillatorType, frequency, volume) {
   gain.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
 
   this.oscillator = this.context.createOscillator();
-  this.oscillator.frequency.value = frequencies[frequencyIndex];
+  this.oscillator.frequency.value = FREQUENCIES[frequencyIndex];
   this.oscillator.connect(gain);
   this.oscillator.type = oscillatorType;
   this.oscillator.start(now);

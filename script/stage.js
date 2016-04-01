@@ -21,7 +21,7 @@ function Stage(canvas)
   disk.listenToEvent("PLAYSOUND", function(eventName, oscillatorType, frequency) { oscillatorSound.play(oscillatorType, frequency, 1); });
   disk.listenToEvent("POPOUT", function(eventName, type, touch) { var popbox = eval("popbox" + type); if (popbox) { popbox.onTouch(touch); } });
 	//disk.listenToEvent("TICKMETRONOME", function() {metronomeSound.play();});
-	slider1.listenToEvent("SLIDE", function() { disk.adjustSpin((100 - slider1.value) / 10); });
+  slider1.listenToEvent("SLIDE", function() { disk.adjustSpin((100 - slider1.value) / 10); });
   popbox1.listenToEvent("POP", function() { disk.addPopbox(popbox1.centerX, popbox1.centerY, popbox1.popboxColor, OscillatorType.TRIANGLE, popbox1.type); });
   popbox2.listenToEvent("POP", function() { disk.addPopbox(popbox2.centerX, popbox2.centerY, popbox2.popboxColor, OscillatorType.SAWTOOTH, popbox2.type); });
   popbox3.listenToEvent("POP", function() { disk.addPopbox(popbox3.centerX, popbox3.centerY, popbox3.popboxColor, OscillatorType.SQUARE, popbox3.type); });
