@@ -19,13 +19,62 @@ PictureDisk.prototype.draw = function(canvas)
   ctx.translate(this.centerX, this.centerY);
 
   ctx.rotate(this.getRadianAngle());
-    ctx.drawImage(this.imageObj, -this.imageObj.width / 2, -this.imageObj.height / 2);
+  ctx.drawImage(this.imageObj, -this.imageObj.width / 2, -this.imageObj.height / 2);
+
+  if(true) {
+
+    ctx.strokeStyle = 'rgba(215,85,85,0.4)';
+    ctx.lineWidth = 3;
+
+    ctx.beginPath();
+    ctx.moveTo(0, -35);
+    ctx.lineTo(0, -this.getRadius());
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(25, -25);
+    ctx.lineTo((this.getRadius()-106),-(this.getRadius()-106));
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(0, 35);
+    ctx.lineTo(0, this.getRadius());
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(25, 25);
+    ctx.lineTo((this.getRadius()-106),(this.getRadius()-106));
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(-35, 0);
+    ctx.lineTo(-this.getRadius(), 0);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(-25, 25);
+    ctx.lineTo(-(this.getRadius()-106),(this.getRadius()-106));
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(35, 0);
+    ctx.lineTo(this.getRadius(), 0);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(-25, -25);
+    ctx.lineTo(-(this.getRadius()-106),-(this.getRadius()-106));
+    ctx.stroke();
+    
+  }
+
   ctx.rotate( - this.getRadianAngle());
 
   ctx.beginPath();
   ctx.moveTo(0, -35);
   ctx.lineTo(0, -this.getRadius());
-  ctx.strokeStyle = '#FFFFFF';
+  ctx.lineWidth = 3;
+  ctx.strokeStyle = 'rgba(255,255,255,0.4)';
   ctx.stroke();
 
   ctx.rotate(this.getRadianAngle());

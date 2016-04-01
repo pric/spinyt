@@ -55,7 +55,14 @@ Disk.prototype.spin = function ()
 {
   if (this.isSpinning)
   {
+    var previousAngle = this.angle;
     this.angle += this.spinningSpeed;
+
+
+    if(Math.floor(previousAngle/45) != Math.floor(this.angle/45))
+    {
+      this.notifyListeners("TICKMETRONOME");
+    }
 
     var barAngle = 270 - this.getDegreeAngle();
     if (barAngle < 0)
