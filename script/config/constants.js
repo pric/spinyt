@@ -9,4 +9,4 @@ const TOUCH_EVENT_TIMEOUT = 200;
 
 const THEME_ID = 1;
 
-const PULSE_ME_LIKE_YOU_OWN_ME = 10;
+const PULSE_TIME = 10;
