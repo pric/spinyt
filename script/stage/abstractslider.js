@@ -6,7 +6,7 @@ var Slider = function() {
 
 	StageObject.apply(this, arguments);
 
-	this.value = 0;
+	this.value = 100;
 };
 
 Slider.prototype = Object.create(StageObject.prototype);
