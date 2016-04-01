@@ -4,9 +4,9 @@ function Stage(canvas)
   this.listeners = [];
   stageObject = this;
 
-  var slider1 = new PictureSlider(this.canvas.width - (this.canvas.width/ 10), this.canvas.height / 4, 54, 280);
-  var slider2 = new PictureSlider(this.canvas.width - (this.canvas.width/ 10), (this.canvas.height / 4) * 3, 54, 280);
-  var slider3 = new PictureSlider(this.canvas.width - (this.canvas.width/ 10) + 75, (this.canvas.height / 4) * 3, 54, 280);
+  var slider1 = new PictureSlider(this.canvas.width - (this.canvas.width/ 9), this.canvas.height / 4, 54, 280);
+  var slider2 = new PictureSlider(this.canvas.width - (this.canvas.width/ 9), (this.canvas.height / 4) * 3, 54, 280);
+  var slider3 = new PictureSlider(this.canvas.width - (this.canvas.width/ 9) + 60, (this.canvas.height / 4) * 3, 54, 280);
 
   var disk = new PictureDisk(this.canvas.width / 2, this.canvas.height / 2, 725, 725);
   var popbox1 = new PicturePopbox(64, 576, 100, 110, "eb6060", 1);
@@ -23,11 +23,15 @@ function Stage(canvas)
 	disk.listenToEvent("TICKMETRONOME", function() { metronomeSound.play(); });
   slider1.listenToEvent("SLIDE", function() { disk.adjustSpin((100 - slider1.value) / 10); });
   slider2.listenToEvent("SLIDE", function() { oscillatorSound.setVolume(100 - slider2.value); });
-  slider3.listenToEvent("SLIDE", function() { metronomeSound.setVolume(100 - slider3.value); });
+  slider3.listenToEvent("SLIDE", function() { metronomeSound.setVolume((100 - slider3.value) / 10); });
   popbox1.listenToEvent("POP", function() { disk.addPopbox(popbox1.centerX, popbox1.centerY, popbox1.popboxColor, OscillatorType.TRIANGLE, popbox1.type); });
   popbox2.listenToEvent("POP", function() { disk.addPopbox(popbox2.centerX, popbox2.centerY, popbox2.popboxColor, OscillatorType.SAWTOOTH, popbox2.type); });
   popbox3.listenToEvent("POP", function() { disk.addPopbox(popbox3.centerX, popbox3.centerY, popbox3.popboxColor, OscillatorType.SQUARE, popbox3.type); });
   popbox4.listenToEvent("POP", function() { disk.addPopbox(popbox4.centerX, popbox4.centerY, popbox4.popboxColor, OscillatorType.SINE, popbox4.type); });
+
+  slider1.slide(50);
+  slider2.slide(50);
+  slider3.slide(100);
 
   this.objects = [];
   this.objects.push(disk);
@@ -54,6 +58,15 @@ Stage.prototype.draw = function()
 {
   var ctx = this.canvas.getContext("2d");
   ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+  ctx.fillStyle = "#ffffff";
+
+  ctx.font = "18px Comic Sans MS";
+  ctx.fillText("Vitesse", 880, 30);
+  ctx.fillText("Volume", 910, 400);
+  ctx.fillText("N", 903, 430);
+  ctx.fillText("M", 962, 430);
+
 
   this.executeFunctionOnObjects("draw", this.canvas);
 }
