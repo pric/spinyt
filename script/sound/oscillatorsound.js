@@ -15,13 +15,10 @@ OscillatorSound.prototype.constructor = OscillatorSound;
 
 OscillatorSound.prototype.play = function (oscillatorType, frequency) {
 
-  console.log(this.volume);
-
   var frequencyIndex = FREQUENCIES.length - Math.round(frequency*FREQUENCIES.length);
   var now = this.context.currentTime;
   var gain = this.context.createGain();
   var volumeNode = this.context.createGain();
-
 
   volumeNode.connect(this.context.destination);
   volumeNode.gain.value = this.volume / 100;

@@ -6,6 +6,7 @@ function Stage(canvas)
 
   var slider1 = new PictureSlider(this.canvas.width - (this.canvas.width/ 10), this.canvas.height / 4, 54, 280);
   var slider2 = new PictureSlider(this.canvas.width - (this.canvas.width/ 10), (this.canvas.height / 4) * 3, 54, 280);
+  var slider3 = new PictureSlider(this.canvas.width - (this.canvas.width/ 10) + 75, (this.canvas.height / 4) * 3, 54, 280);
 
   var disk = new PictureDisk(this.canvas.width / 2, this.canvas.height / 2, 725, 725);
   var popbox1 = new PicturePopbox(64, 576, 100, 110, "eb6060", 1);
@@ -17,12 +18,12 @@ function Stage(canvas)
   var oscillatorSound = new OscillatorSound(audioContext);
 	var metronomeSound = new MetronomeSound(audioContext);
 
-  //disk.listenToEvent("PLAYSOUND", function(eventName, oscillatorType, frequency) { oscillatorSound.play(oscillatorType, frequency, 1); });
   disk.listenToEvent("PLAYSOUND", function(eventName, oscillatorType, frequency) { oscillatorSound.play(oscillatorType, frequency, 1); });
   disk.listenToEvent("POPOUT", function(eventName, type, touch) { var popbox = eval("popbox" + type); if (popbox) { popbox.onTouch(touch); } });
-	//disk.listenToEvent("TICKMETRONOME", function() {metronomeSound.play();});
+	disk.listenToEvent("TICKMETRONOME", function() { metronomeSound.play(); });
   slider1.listenToEvent("SLIDE", function() { disk.adjustSpin((100 - slider1.value) / 10); });
   slider2.listenToEvent("SLIDE", function() { oscillatorSound.setVolume(100 - slider2.value); });
+  slider3.listenToEvent("SLIDE", function() { metronomeSound.setVolume(100 - slider3.value); });
   popbox1.listenToEvent("POP", function() { disk.addPopbox(popbox1.centerX, popbox1.centerY, popbox1.popboxColor, OscillatorType.TRIANGLE, popbox1.type); });
   popbox2.listenToEvent("POP", function() { disk.addPopbox(popbox2.centerX, popbox2.centerY, popbox2.popboxColor, OscillatorType.SAWTOOTH, popbox2.type); });
   popbox3.listenToEvent("POP", function() { disk.addPopbox(popbox3.centerX, popbox3.centerY, popbox3.popboxColor, OscillatorType.SQUARE, popbox3.type); });
@@ -32,6 +33,7 @@ function Stage(canvas)
   this.objects.push(disk);
   this.objects.push(slider1);
   this.objects.push(slider2);
+  this.objects.push(slider3);
   this.objects.push(popbox1);
   this.objects.push(popbox2);
   this.objects.push(popbox3);
